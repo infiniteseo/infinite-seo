@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered partner or student account information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user" },
+        "name": { "type": "string", "description": "The user's real full name" },
+        "email": { "type": "string", "description": "The user's email address" },
+        "phone": { "type": "string", "description": "The user's mobile or WhatsApp helpline" },
+        "course": { "type": "string", "description": "Course selected for enrollment" },
+        "payoutUpi": { "type": "string", "description": "UPI ID for commission cash-outs" },
+        "promoCode": { "type": "string", "description": "Unique partner referral coupon code" },
+        "partnerLevel": { "type": "string", "enum": ["novice", "pro", "master"], "description": "Partner tier of the user" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Inception timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last modified timestamp" }
+      },
+      "required": ["uid", "name", "email", "createdAt"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Contact form submissions and inquiries",
+      "type": "object",
+      "properties": {
+        "userName": { "type": "string", "description": "Individual full name" },
+        "userEmail": { "type": "string", "description": "Contact inbox address" },
+        "userSubject": { "type": "string", "description": "Inquiry subject line" },
+        "userMessage": { "type": "string", "description": "Message content" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["userName", "userEmail", "userSubject", "userMessage", "createdAt"]
+    },
+    "Referral": {
+      "title": "Referral",
+      "description": "Referral leads tracked for a partner",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Internal referral tracking ID" },
+        "name": { "type": "string", "description": "Prospect lead name" },
+        "courseSelected": { "type": "string", "description": "Course selected" },
+        "coursePrice": { "type": "number", "description": "Cost of course" },
+        "commissionEarned": { "type": "number", "description": "Commissions created" },
+        "status": { "type": "string", "enum": ["Completed", "Pending", "Lead Only"], "description": "Assigned status" },
+        "referrerUid": { "type": "string", "description": "Referrer UID" },
+        "date": { "type": "string", "description": "Calendar date string of entry" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "name", "courseSelected", "coursePrice", "commissionEarned", "status", "referrerUid", "date", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profile details keyed by auth UID"
+    },
+    "inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "A contact inquiry ticket saved from the website"
+    },
+    "users/{userId}/referrals/{referralId}": {
+      "schema": "Referral",
+      "description": "Sub-collection tracking a partner's referred leads"
+    }
+  }
+}

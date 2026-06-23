@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 3. Global Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Validates document ID string characters and sizing to prevent resource exhaust
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Validation Blueprint for Users
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'name', 'email', 'createdAt'])
+        && data.uid is string && data.uid.size() <= 128
+        && data.name is string && data.name.size() <= 150
+        && data.email is string && data.email.size() <= 150
+        && data.createdAt == request.time
+        && (!data.keys().contains('phone') || (data.phone is string && data.phone.size() <= 50))
+        && (!data.keys().contains('course') || (data.course is string && data.course.size() <= 100))
+        && (!data.keys().contains('payoutUpi') || (data.payoutUpi is string && data.payoutUpi.size() <= 100))
+        && (!data.keys().contains('promoCode') || (data.promoCode is string && data.promoCode.size() <= 50))
+        && (!data.keys().contains('partnerLevel') || (data.partnerLevel in ['novice', 'pro', 'master']));
+    }
+
+    // Validation Blueprint for Inquiries (Contact Form submissions)
+    function isValidInquiry(data) {
+      return data.keys().hasAll(['userName', 'userEmail', 'userSubject', 'userMessage', 'createdAt'])
+        && data.keys().size() == 5
+        && data.userName is string && data.userName.size() <= 150
+        && data.userEmail is string && data.userEmail.size() <= 150
+        && data.userSubject is string && data.userSubject.size() <= 200
+        && data.userMessage is string && data.userMessage.size() <= 1500
+        && data.createdAt == request.time;
+    }
+
+    // Validation Blueprint for Referrals
+    function isValidReferral(data) {
+      return data.keys().hasAll(['id', 'name', 'courseSelected', 'coursePrice', 'commissionEarned', 'status', 'referrerUid', 'date', 'createdAt'])
+        && data.keys().size() == 9
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 150
+        && data.courseSelected is string && data.courseSelected.size() <= 150
+        && (data.coursePrice is int || data.coursePrice is float)
+        && (data.commissionEarned is int || data.commissionEarned is float)
+        && data.status in ['Completed', 'Pending', 'Lead Only']
+        && data.referrerUid is string && data.referrerUid.size() <= 128
+        && data.date is string && data.date.size() <= 50
+        && data.createdAt == request.time;
+    }
+
+    // User Profile Documents Collection
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId && isValidId(userId);
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidUser(incoming());
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidUser(incoming())
+                     && incoming().uid == request.auth.uid
+                     && (!request.resource.data.keys().contains('createdAt') || incoming().createdAt == resource.data.createdAt);
+      allow delete: if false; // Profiles denote student entries and cannot be deleted from SDK
+
+      // Referral Subcollection inside User profiles
+      match /referrals/{referralId} {
+        allow get: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(referralId);
+        allow list: if isSignedIn() && request.auth.uid == userId && isValidId(userId);
+        
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(referralId)
+                       && incoming().referrerUid == request.auth.uid
+                       && isValidReferral(incoming());
+                       
+        allow update: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(referralId)
+                       && incoming().referrerUid == request.auth.uid
+                       && isValidReferral(incoming())
+                       && (!request.resource.data.keys().contains('createdAt') || incoming().createdAt == resource.data.createdAt)
+                       && (!request.resource.data.keys().contains('id') || incoming().id == resource.data.id);
+                       
+        allow delete: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(referralId);
+      }
+    }
+
+    // Public Contact Form Submissions Inquiry collection
+    match /inquiries/{inquiryId} {
+      allow get: if false; // Strict PII Protection - Public cannot query individual contact logs
+      allow list: if false; // Strict PII Protection - Overrides arbitrary collection scraping
+      allow create: if isValidId(inquiryId) && isValidInquiry(incoming());
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
