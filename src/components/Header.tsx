@@ -38,7 +38,7 @@ export default function Header({ onContactClick, onExploreClick }: HeaderProps) 
     { name: "Home", href: "#home", id: "home-link" },
     { name: "About Us", href: "#about", id: "about-link" },
     { name: "Services", href: "#services", id: "services-link" },
-    { name: "Courses", href: "#courses", id: "courses-link" },
+    { name: "Training", href: "#courses", id: "courses-link" },
     { name: "Why Us", href: "#why-us", id: "why-us-link" },
     { name: "Success Stories", href: "#success-stories", id: "success-stories-link" },
     { name: "Pricing", href: "#pricing", id: "pricing-link" },

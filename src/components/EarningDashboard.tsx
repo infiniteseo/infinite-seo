@@ -413,7 +413,7 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
   };
 
   const copyPartnerLink = () => {
-    const inviteLink = `https://infiniteseo.com/join?ref=${currentUser.promoCode}`;
+    const inviteLink = `https://infiniteseo.net/join?ref=${currentUser.promoCode}`;
     navigator.clipboard.writeText(inviteLink);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 2000);
@@ -685,7 +685,7 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                       <input 
                         type="text" 
                         required
-                        placeholder="e.g. Rohit Kamble"
+                        placeholder="e.g. John Doe"
                         value={regName}
                         onChange={(e) => setRegName(e.target.value)}
                         className="w-full bg-slate-950 border border-slate-850 px-4 py-2.5 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -709,7 +709,7 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                         <input 
                           type="text" 
                           required
-                          placeholder="e.g. +91 9876543210"
+                          placeholder="e.g. +91 987654xxxx"
                           value={regPhone}
                           onChange={(e) => setRegPhone(e.target.value)}
                           className="w-full bg-slate-950 border border-slate-850 px-4 py-2.5 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -774,7 +774,7 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                   <form onSubmit={handleApplyCoupon} className="flex gap-2 bg-slate-950 p-2 rounded-xl border border-slate-850">
                     <input 
                       type="text"
-                      placeholder="TRY 'GROWTH20' OR 'WELCOME10'"
+                      placeholder="Enter Promo Code here"
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
                       className="flex-grow bg-transparent text-xs sm:text-sm uppercase tracking-wider font-semibold font-mono pl-3 text-white focus:outline-none placeholder-slate-600"
@@ -1436,7 +1436,7 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                 <input 
                   type="text" 
                   readOnly 
-                  value={`https://infiniteseo.com/join?ref=${currentUser.promoCode}`}
+                  value={`https://infiniteseo.net/join?ref=${currentUser.promoCode}`}
                   className="bg-transparent text-xs text-slate-350 font-mono focus:outline-none w-full"
                 />
                 <button 
