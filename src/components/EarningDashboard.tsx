@@ -229,8 +229,10 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
   };
 
   const currentOriginalPrice = getCoursePrice(regCourse);
-  const calculatedSavings = Math.round(currentOriginalPrice * (discountPercent / 100));
-  const currentPayablePrice = currentOriginalPrice - calculatedSavings;
+  const calculatedSavings = currentOriginalPrice;
+  const currentPayablePrice = currentOriginalPrice;
+  // const calculatedSavings = Math.round(currentOriginalPrice * (discountPercent / 100));
+  // const currentPayablePrice = currentOriginalPrice - calculatedSavings;
 
   const getCommissionForCourse = (courseName: string, level: "novice" | "pro" | "master"): number => {
     let base = 3000; // Advance Course default (₹3,000 instead of ₹2250)
@@ -791,9 +793,17 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                     <div className={`p-3 rounded-lg text-xs font-semibold ${
                       couponApplied ? "bg-emerald-500/10 border border-emerald-500/25 text-emerald-400" : "bg-red-500/10 border border-red-500/25 text-red-400"
                     }`}>
-                      {couponMsg}
+                      Coupon Validated!
                     </div>
                   )}
+
+                  {/* {couponMsg && (
+                    <div className={`p-3 rounded-lg text-xs font-semibold ${
+                      couponApplied ? "bg-emerald-500/10 border border-emerald-500/25 text-emerald-400" : "bg-red-500/10 border border-red-500/25 text-red-400"
+                    }`}>
+                      {couponMsg}
+                    </div>
+                  )} */}
 
                   {/* Invoice Bill Layout */}
                   <div className="bg-slate-950 p-4 rounded-2xl border border-slate-850 space-y-2.5 font-sans">
@@ -802,12 +812,12 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                       <span className="font-mono text-slate-200">₹{currentOriginalPrice.toLocaleString("en-IN")}</span>
                     </div>
 
-                    {discountPercent > 0 && (
+                    {/* {discountPercent > 0 && (
                       <div className="flex justify-between text-xs text-emerald-400 font-semibold">
                         <span>Campaign Promo Reduction ({discountPercent}%):</span>
                         <span className="font-mono">- ₹{calculatedSavings.toLocaleString("en-IN")}</span>
                       </div>
-                    )}
+                    )} */}
 
                     <div className="h-px bg-slate-850 my-2"></div>
 
