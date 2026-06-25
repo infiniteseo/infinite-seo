@@ -280,22 +280,40 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
     const cleanCoupon = promoInput.trim().toUpperCase();
     if (!cleanCoupon) return;
 
+    // if (cleanCoupon === "WELCOME10") {
+    //   setDiscountPercent(10);
+    //   setCouponApplied("WELCOME10");
+    //   setCouponMsg("Success! 10% Introductory Discount applied.");
+    // } else if (cleanCoupon === "GROWTH20") {
+    //   setDiscountPercent(20);
+    //   setCouponApplied("GROWTH20");
+    //   setCouponMsg("Fantastic! 20% Exclusive Promotion coupon applied.");
+    // } else if (cleanCoupon === "INFINITE15") {
+    //   setDiscountPercent(15);
+    //   setCouponApplied("INFINITE15");
+    //   setCouponMsg("Awesome! Special 15% Referral coupon applied successfully.");
+    // } else {
+    //   setDiscountPercent(0);
+    //   setCouponApplied("");
+    //   setCouponMsg("Invalid coupon code. Try 'GROWTH20' or 'WELCOME10'.");
+    // }
+
     if (cleanCoupon === "WELCOME10") {
       setDiscountPercent(10);
       setCouponApplied("WELCOME10");
-      setCouponMsg("Success! 10% Introductory Discount applied.");
+      setCouponMsg("Coupon Validated!");
     } else if (cleanCoupon === "GROWTH20") {
       setDiscountPercent(20);
       setCouponApplied("GROWTH20");
-      setCouponMsg("Fantastic! 20% Exclusive Promotion coupon applied.");
+      setCouponMsg("Coupon Validated!");
     } else if (cleanCoupon === "INFINITE15") {
       setDiscountPercent(15);
       setCouponApplied("INFINITE15");
-      setCouponMsg("Awesome! Special 15% Referral coupon applied successfully.");
+      setCouponMsg("Coupon Validated!");
     } else {
       setDiscountPercent(0);
       setCouponApplied("");
-      setCouponMsg("Invalid coupon code. Try 'GROWTH20' or 'WELCOME10'.");
+      setCouponMsg("Invalid coupon code.");
     }
   };
 
@@ -793,17 +811,9 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                     <div className={`p-3 rounded-lg text-xs font-semibold ${
                       couponApplied ? "bg-emerald-500/10 border border-emerald-500/25 text-emerald-400" : "bg-red-500/10 border border-red-500/25 text-red-400"
                     }`}>
-                      Coupon Validated!
-                    </div>
-                  )}
-
-                  {/* {couponMsg && (
-                    <div className={`p-3 rounded-lg text-xs font-semibold ${
-                      couponApplied ? "bg-emerald-500/10 border border-emerald-500/25 text-emerald-400" : "bg-red-500/10 border border-red-500/25 text-red-400"
-                    }`}>
                       {couponMsg}
                     </div>
-                  )} */}
+                  )} 
 
                   {/* Invoice Bill Layout */}
                   <div className="bg-slate-950 p-4 rounded-2xl border border-slate-850 space-y-2.5 font-sans">
