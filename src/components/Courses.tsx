@@ -135,6 +135,12 @@ export default function Courses({ onEnrollClick }: CoursesProps) {
     }
     setValidationError("");
     setEnrollSubmitted(true);
+    
+    // Trigger celebration overlay with custom positive reinforcement message
+    window.dispatchEvent(new CustomEvent("celebration-trigger", {
+      detail: { message: `Enrollment callback registered for ${callbackCourse || "course"}!` }
+    }));
+
     setTimeout(() => {
       // Clear up state
       setEnrollSubmitted(false);
@@ -318,7 +324,7 @@ export default function Courses({ onEnrollClick }: CoursesProps) {
                       </span>
                     )}
                     <span className="text-[10px] text-slate-400 block font-semibold uppercase tracking-widest mt-0.5">
-                      Total Course Fee
+                      Total Training Fee
                     </span>
                   </div>
                   <button

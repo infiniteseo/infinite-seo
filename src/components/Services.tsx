@@ -67,7 +67,7 @@ export default function Services({ onServiceSelect }: ServicesProps) {
                 We provide Trainings & Placement in our company & we also provide Internships & Certificate
               </h3>
               <p className="text-slate-300 text-sm sm:text-base max-w-2xl font-light">
-                We offer hands-on training coupled with real placement pipelines within the Infinite SEO team! Excel in our courses and secure active client-facing positions globally.
+                We offer hands-on training coupled with real placement pipelines within the Infinite SEO team! Excel in our trainings and secure active client-facing positions globally.
               </p>
             </div>
             <button

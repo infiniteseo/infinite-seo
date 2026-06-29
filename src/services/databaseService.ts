@@ -12,7 +12,7 @@ import {
   orderBy
 } from "firebase/firestore";
 import { db, auth, OperationType, handleFirestoreError } from "../firebase";
-import { User, Inquiry, Referral, SuccessStory } from "../types";
+import { User, Inquiry, Referral, SuccessStory, PaymentConfig, UserPayment, WorkshopRegistration } from "../types";
 import { SUCCESS_STORIES_DATA } from "../data";
 
 // Helper to determine if Firebase is configured with real active keys
@@ -31,6 +31,9 @@ const STORAGE_KEYS = {
   INQUIRIES: "infinite_seo_inquiries",
   REFERRALS: "infinite_seo_referrals",
   SUCCESS_STORIES: "infinite_seo_success_stories",
+  PAYMENT_CONFIG: "infinite_seo_payment_config",
+  USER_PAYMENTS: "infinite_seo_user_payments",
+  WORKSHOPS: "infinite_seo_workshops",
 };
 
 /**
@@ -180,11 +183,34 @@ export const DatabaseService = {
       createdAt: new Date().toISOString()
     };
 
-    // Save locally
+    // Save globally
     const local = localStorage.getItem(STORAGE_KEYS.INQUIRIES);
     const inquiries: Inquiry[] = local ? JSON.parse(local) : [];
     inquiries.push(newInquiry);
     localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(inquiries));
+
+    // Save under logged in user if active
+    if (auth.currentUser) {
+      const userId = auth.currentUser.uid;
+      const localKey = `${STORAGE_KEYS.INQUIRIES}_${userId}`;
+      const localUserInquiries = localStorage.getItem(localKey);
+      const userInquiriesList: Inquiry[] = localUserInquiries ? JSON.parse(localUserInquiries) : [];
+      userInquiriesList.push(newInquiry);
+      localStorage.setItem(localKey, JSON.stringify(userInquiriesList));
+
+      if (isDbConfigured) {
+        try {
+          const userInquiriesCol = collection(db, "users", userId, "inquiries");
+          await addDoc(userInquiriesCol, {
+            ...newInquiry,
+            createdAt: serverTimestamp()
+          });
+          console.log("Firestore User-specific Inquiry cataloged successfully");
+        } catch (error) {
+          console.warn("Could not save user-specific inquiry to Firestore:", error);
+        }
+      }
+    }
 
     if (isDbConfigured) {
       const path = "inquiries";
@@ -199,6 +225,41 @@ export const DatabaseService = {
         handleFirestoreError(error, OperationType.WRITE, path);
       }
     }
+  },
+
+  async getUserInquiries(userId: string): Promise<Inquiry[]> {
+    const localKey = `${STORAGE_KEYS.INQUIRIES}_${userId}`;
+    const local = localStorage.getItem(localKey);
+    let inquiriesList: Inquiry[] = local ? JSON.parse(local) : [];
+
+    if (isDbConfigured) {
+      const path = `users/${userId}/inquiries`;
+      try {
+        const inquiriesCol = collection(db, "users", userId, "inquiries");
+        const snap = await getDocs(inquiriesCol);
+        
+        if (!snap.empty) {
+          const cloudInquiries: Inquiry[] = [];
+          snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            cloudInquiries.push({
+              userName: data.userName,
+              userEmail: data.userEmail,
+              userSubject: data.userSubject,
+              userMessage: data.userMessage,
+              createdAt: data.createdAt?.seconds 
+                ? new Date(data.createdAt.seconds * 1000).toISOString() 
+                : (data.createdAt || new Date().toISOString())
+            });
+          });
+          localStorage.setItem(localKey, JSON.stringify(cloudInquiries));
+          return cloudInquiries;
+        }
+      } catch (error) {
+        console.warn("Firestore getUserInquiries error (using local cache):", error);
+      }
+    }
+    return inquiriesList;
   },
 
   /**
@@ -253,5 +314,186 @@ export const DatabaseService = {
         handleFirestoreError(error, OperationType.WRITE, path);
       }
     }
+  },
+
+  async getPaymentConfig(): Promise<PaymentConfig> {
+    const defaultConfig: PaymentConfig = {
+      ownerUpiId: "ritukamble329@okicici",
+      ownerName: "Bish",
+      basicCourseUrl: "",
+      advanceCourseUrl: "",
+      masteryCourseUrl: "",
+      starterPlanUrl: "",
+      proPlanUrl: "",
+      premiumPlanUrl: "",
+      qrCodeEnabled: true,
+    };
+
+    const local = localStorage.getItem(STORAGE_KEYS.PAYMENT_CONFIG);
+    let config: PaymentConfig = local ? JSON.parse(local) : defaultConfig;
+
+    // Self-heal/migrate old placeholder defaults in local storage to user's new real QR details
+    if (config.ownerUpiId === "infiniteseo777@okaxis") {
+      config.ownerUpiId = "ritukamble329@okicici";
+    }
+    if (config.ownerName === "Infinite SEO Academy") {
+      config.ownerName = "Bish";
+    }
+
+    if (isDbConfigured) {
+      try {
+        const configRef = doc(db, "config", "paymentConfig");
+        const snap = await getDoc(configRef);
+        if (snap.exists()) {
+          const cloudConfig = snap.data() as PaymentConfig;
+          localStorage.setItem(STORAGE_KEYS.PAYMENT_CONFIG, JSON.stringify(cloudConfig));
+          return cloudConfig;
+        }
+      } catch (err) {
+        console.warn("Firestore getPaymentConfig error, using cached local config:", err);
+      }
+    }
+
+    return config;
+  },
+
+  async savePaymentConfig(config: PaymentConfig, persistToLocal: boolean = true): Promise<void> {
+    if (persistToLocal) {
+      localStorage.setItem(STORAGE_KEYS.PAYMENT_CONFIG, JSON.stringify(config));
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.PAYMENT_CONFIG);
+    }
+
+    if (isDbConfigured) {
+      const path = "config/paymentConfig";
+      try {
+        const configRef = doc(db, "config", "paymentConfig");
+        await setDoc(configRef, {
+          ...config,
+          updatedAt: serverTimestamp()
+        });
+        console.log("Firestore PaymentConfig saved successfully");
+      } catch (error) {
+        handleFirestoreError(error, OperationType.WRITE, path);
+      }
+    }
+  },
+
+  async getUserPayments(userId: string): Promise<UserPayment[]> {
+    const localKey = `${STORAGE_KEYS.USER_PAYMENTS}_${userId}`;
+    const local = localStorage.getItem(localKey);
+    let paymentList: UserPayment[] = local ? JSON.parse(local) : [];
+
+    if (isDbConfigured) {
+      const path = `users/${userId}/payments`;
+      try {
+        const paymentsCol = collection(db, "users", userId, "payments");
+        const q = query(paymentsCol, orderBy("createdAt", "desc"));
+        const snap = await getDocs(q);
+        
+        if (!snap.empty) {
+          const cloudPayments: UserPayment[] = [];
+          snap.forEach((docSnap) => {
+            cloudPayments.push(docSnap.data() as UserPayment);
+          });
+          // Update local cache
+          localStorage.setItem(localKey, JSON.stringify(cloudPayments));
+          return cloudPayments;
+        }
+      } catch (error) {
+        console.warn("Firestore getUserPayments error (using local cache):", error);
+      }
+    }
+
+    return paymentList;
+  },
+
+  async addUserPayment(userId: string, payment: UserPayment): Promise<void> {
+    const localKey = `${STORAGE_KEYS.USER_PAYMENTS}_${userId}`;
+    const local = localStorage.getItem(localKey);
+    const payments: UserPayment[] = local ? JSON.parse(local) : [];
+    
+    const updatedPayments = [payment, ...payments];
+    localStorage.setItem(localKey, JSON.stringify(updatedPayments));
+
+    if (isDbConfigured) {
+      const path = `users/${userId}/payments/${payment.id}`;
+      try {
+        const payDocRef = doc(db, "users", userId, "payments", payment.id);
+        await setDoc(payDocRef, {
+          ...payment,
+          createdAt: serverTimestamp()
+        });
+        console.log("Firestore User Payment saved successfully");
+      } catch (error) {
+        handleFirestoreError(error, OperationType.WRITE, path);
+      }
+    }
+  },
+
+  async addWorkshopRegistration(registration: WorkshopRegistration): Promise<void> {
+    const localKey = registration.userId 
+      ? `${STORAGE_KEYS.WORKSHOPS}_${registration.userId}`
+      : `${STORAGE_KEYS.WORKSHOPS}_guest`;
+    
+    const local = localStorage.getItem(localKey);
+    const list: WorkshopRegistration[] = local ? JSON.parse(local) : [];
+    const updated = [registration, ...list];
+    localStorage.setItem(localKey, JSON.stringify(updated));
+
+    if (isDbConfigured) {
+      if (registration.userId) {
+        const path = `users/${registration.userId}/workshops/${registration.id}`;
+        try {
+          const docRef = doc(db, "users", registration.userId, "workshops", registration.id);
+          await setDoc(docRef, {
+            ...registration,
+            createdAt: serverTimestamp()
+          });
+          console.log("Firestore User Workshop Registration saved successfully");
+        } catch (error) {
+          console.warn("Firestore error saving workshop registration: ", error);
+        }
+      } else {
+        const path = `workshops-public/${registration.id}`;
+        try {
+          const docRef = doc(db, "workshops-public", registration.id);
+          await setDoc(docRef, {
+            ...registration,
+            createdAt: serverTimestamp()
+          });
+          console.log("Firestore Guest Workshop Registration saved successfully");
+        } catch (error) {
+          console.warn("Firestore error saving guest workshop registration: ", error);
+        }
+      }
+    }
+  },
+
+  async getUserWorkshopRegistrations(userId: string): Promise<WorkshopRegistration[]> {
+    const localKey = `${STORAGE_KEYS.WORKSHOPS}_${userId}`;
+    const local = localStorage.getItem(localKey);
+    let list: WorkshopRegistration[] = local ? JSON.parse(local) : [];
+
+    if (isDbConfigured) {
+      const path = `users/${userId}/workshops`;
+      try {
+        const colRef = collection(db, "users", userId, "workshops");
+        const q = query(colRef, orderBy("registeredAt", "desc"));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          const cloudList: WorkshopRegistration[] = [];
+          snap.forEach((docSnap) => {
+            cloudList.push(docSnap.data() as WorkshopRegistration);
+          });
+          localStorage.setItem(localKey, JSON.stringify(cloudList));
+          return cloudList;
+        }
+      } catch (error) {
+        console.warn("Firestore getUserWorkshopRegistrations error: ", error);
+      }
+    }
+
+    return list;
   }
 };

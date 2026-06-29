@@ -61,6 +61,33 @@ service cloud.firestore {
         && data.createdAt == request.time;
     }
 
+    // Validation Blueprint for User Payments / Enrollments
+    function isValidUserPayment(data) {
+      return data.keys().hasAll(['id', 'courseOrPlanName', 'amount', 'paymentMethod', 'transactionId', 'status', 'date', 'createdAt'])
+        && data.keys().size() == 8
+        && data.id is string && data.id.size() <= 128
+        && data.courseOrPlanName is string && data.courseOrPlanName.size() <= 150
+        && (data.amount is int || data.amount is float)
+        && data.paymentMethod in ['upi', 'card']
+        && data.transactionId is string && data.transactionId.size() <= 150
+        && data.status in ['Completed', 'Pending', 'Verification Pending']
+        && data.date is string && data.date.size() <= 50
+        && data.createdAt == request.time;
+    }
+
+    // Validation Blueprint for Workshop Registrations
+    function isValidWorkshopRegistration(data) {
+      return data.keys().hasAll(['id', 'name', 'email', 'workshopDate', 'workshopTitle', 'registeredAt', 'createdAt'])
+        && (data.keys().size() == 7 || (data.keys().size() == 8 && data.keys().hasAll(['phone'])))
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 150
+        && data.email is string && data.email.size() <= 150
+        && data.workshopDate is string && data.workshopDate.size() <= 100
+        && data.workshopTitle is string && data.workshopTitle.size() <= 200
+        && data.registeredAt is string && data.registeredAt.size() <= 100
+        && data.createdAt == request.time;
+    }
+
     // User Profile Documents Collection
     match /users/{userId} {
       allow get: if isSignedIn() && request.auth.uid == userId && isValidId(userId);
@@ -87,6 +114,47 @@ service cloud.firestore {
                        
         allow delete: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(referralId);
       }
+
+      // Payments Subcollection inside User profiles
+      match /payments/{paymentId} {
+        allow get: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(paymentId);
+        allow list: if isSignedIn() && request.auth.uid == userId && isValidId(userId);
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(paymentId)
+                       && isValidUserPayment(incoming());
+        allow update: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(paymentId)
+                       && isValidUserPayment(incoming())
+                       && (!request.resource.data.keys().contains('id') || incoming().id == resource.data.id);
+        allow delete: if false;
+      }
+
+      // Personal Inquiries Subcollection inside User profiles
+      match /inquiries/{inquiryId} {
+        allow get: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(inquiryId);
+        allow list: if isSignedIn() && request.auth.uid == userId && isValidId(userId);
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(inquiryId)
+                       && isValidInquiry(incoming());
+        allow update: if false;
+        allow delete: if false;
+      }
+
+      // Workshops Subcollection inside User profiles
+      match /workshops/{workshopId} {
+        allow get: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(workshopId);
+        allow list: if isSignedIn() && request.auth.uid == userId && isValidId(userId);
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(workshopId)
+                       && isValidWorkshopRegistration(incoming());
+        allow update: if false;
+        allow delete: if isSignedIn() && request.auth.uid == userId && isValidId(userId) && isValidId(workshopId);
+      }
+    }
+
+    // Public Workshop Registrations for guests
+    match /workshops-public/{regId} {
+      allow get: if false;
+      allow list: if false;
+      allow create: if isValidId(regId) && isValidWorkshopRegistration(incoming());
+      allow update: if false;
+      allow delete: if false;
     }
 
     // Public Contact Form Submissions Inquiry collection

@@ -32,7 +32,7 @@ export default function SuccessStories() {
     name: "",
     tag: "Young Professional",
     background: "",
-    courseTaken: "Mastery Course (1 Month Course with Internship)",
+    courseTaken: "Mastery Training (1 Month Training with Internship)",
     skillsLearned: "",
     achievements: "",
     highlightMetric: "",
@@ -117,7 +117,7 @@ export default function SuccessStories() {
       name: "",
       tag: "Young Professional",
       background: "",
-      courseTaken: "Mastery Course (1 Month Course with Internship)",
+      courseTaken: "Mastery Training (1 Month Training with Internship)",
       skillsLearned: "",
       achievements: "",
       highlightMetric: "",
@@ -144,7 +144,7 @@ export default function SuccessStories() {
             Our Elite Student Success Stories
           </h2>
           <p className="text-slate-500 text-xs sm:text-sm mt-3 font-light leading-relaxed">
-            Deconstruct the real backgrounds, courses taken, technical skills mastered, and specific financial achievements of real students who scaled to corporate placements and premium freelance retainers.
+            Deconstruct the real backgrounds, trainings taken, technical skills mastered, and specific financial achievements of real students who scaled to corporate placements and premium freelance retainers.
           </p>
           <div className="h-1 w-12 bg-amber-500 mx-auto mt-4 rounded-full"></div>
         </div>
@@ -497,10 +497,10 @@ export default function SuccessStories() {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Course */}
+                      {/* Training */}
                       <div>
                         <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">
-                          Course Enrolled *
+                          Training Enrolled *
                         </label>
                         <select 
                           name="courseTaken"
@@ -508,9 +508,9 @@ export default function SuccessStories() {
                           onChange={handleInputChange}
                           className="w-full text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2.5 bg-white focus:ring-1 focus:ring-amber-500 focus:border-amber-500 outline-none"
                         >
-                          <option value="Basic Course (1-2 Weeks with Internship)">Basic Course</option>
-                          <option value="Advance Course (2 Weeks with Internship)">Advance Course</option>
-                          <option value="Mastery Course (1 Month Course with Internship)">Mastery Course</option>
+                          <option value="Basic Training (1-2 Weeks with Internship)">Basic Training</option>
+                          <option value="Advance Training (2 Weeks with Internship)">Advance Training</option>
+                          <option value="Mastery Training (1 Month Training with Internship)">Mastery Training</option>
                         </select>
                       </div>
 

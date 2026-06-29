@@ -196,7 +196,7 @@ export default function LiveTrainingsSection({ onInquireClick }: LiveTrainingsSe
               </div>
               <div className="p-6">
                 <h4 className="font-extrabold text-white text-base tracking-tight mb-2 group-hover:text-emerald-400 transition-colors">
-                  Laptop-Empowered Growth
+                  Empowered Growth
                 </h4>
                 <p className="text-slate-400 text-xs font-light leading-relaxed">
                   Go from absolute zero background to a confident high-income digital operator. Unlock financial freedom, work from anywhere on your terms, and completely eliminate career stress.

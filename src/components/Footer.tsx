@@ -52,7 +52,7 @@ export default function Footer() {
                 <a href="#services" className="hover:text-white transition-colors">Services</a>
               </li>
               <li>
-                <a href="#courses" className="hover:text-white transition-colors">Courses</a>
+                <a href="#courses" className="hover:text-white transition-colors">Trainings</a>
               </li>
             </ul>
           </div>

@@ -1,10 +1,10 @@
 {
-  "projectId": "remixed-project-id",
-  "appId": "remixed-app-id",
-  "apiKey": "remixed-api-key",
-  "authDomain": "remixed-auth-domain",
-  "firestoreDatabaseId": "remixed-firestore-database-id",
-  "storageBucket": "remixed-storage-bucket",
-  "messagingSenderId": "remixed-messaging-sender-id",
-  "measurementId": "remixed-measurement-id"
+  "projectId": "dark-fusion-zf4nj",
+  "appId": "1:615174377195:web:6be28bf1a45b88389438ae",
+  "apiKey": "AIzaSyDE0TtbVjfzZKOPQUbQTSusqoDKQ0V5WSk",
+  "authDomain": "dark-fusion-zf4nj.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-remixremixremixi-308763cf-4e90-4335-924c-079849c1c35b",
+  "storageBucket": "dark-fusion-zf4nj.firebasestorage.app",
+  "messagingSenderId": "615174377195",
+  "measurementId": ""
 }

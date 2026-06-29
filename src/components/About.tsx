@@ -2,10 +2,10 @@ import React from "react";
 import { Compass, Target, HelpCircle, GraduationCap, ArrowUpRight } from "lucide-react";
 
 interface AboutProps {
-  onExploreCourses: () => void;
+  onExploreTrainings: () => void;
 }
 
-export default function About({ onExploreCourses }: AboutProps) {
+export default function About({ onExploreTrainings }: AboutProps) {
   return (
     <section id="about" className="py-24 bg-white text-slate-900 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,7 +44,7 @@ export default function About({ onExploreCourses }: AboutProps) {
             <div className="pt-4">
               <button
                 id="btn-about-explore"
-                onClick={onExploreCourses}
+                onClick={onExploreTrainings}
                 className="inline-flex items-center space-x-2 text-[#2563EB] hover:text-blue-700 font-bold text-sm transition-colors cursor-pointer"
               >
                 <span>Read curriculum pathways</span>

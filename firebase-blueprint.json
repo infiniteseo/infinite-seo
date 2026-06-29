@@ -47,6 +47,39 @@
         "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
       },
       "required": ["id", "name", "courseSelected", "coursePrice", "commissionEarned", "status", "referrerUid", "date", "createdAt"]
+    },
+    "UserPayment": {
+      "title": "UserPayment",
+      "description": "Payment and course enrollment receipts for a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Transaction identification string" },
+        "courseOrPlanName": { "type": "string", "description": "Name of the practical course or plan" },
+        "amount": { "type": "number", "description": "Numeric pricing value paid" },
+        "paymentMethod": { "type": "string", "enum": ["upi", "card"], "description": "Payment method choice" },
+        "transactionId": { "type": "string", "description": "Debit reference or UTR reference string" },
+        "status": { "type": "string", "enum": ["Completed", "Pending", "Verification Pending"], "description": "Transactional validation status" },
+        "date": { "type": "string", "description": "Calendar date of entry" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Registration timestamp" }
+      },
+      "required": ["id", "courseOrPlanName", "amount", "paymentMethod", "transactionId", "status", "date"]
+    },
+    "WorkshopRegistration": {
+      "title": "WorkshopRegistration",
+      "description": "Registration for a free digital marketing workshop",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Registration ID" },
+        "userId": { "type": "string", "description": "User UID if authenticated" },
+        "name": { "type": "string", "description": "Attendee full name" },
+        "email": { "type": "string", "description": "Attendee email address" },
+        "phone": { "type": "string", "description": "Attendee phone number" },
+        "workshopDate": { "type": "string", "description": "Calendar date of workshop" },
+        "workshopTitle": { "type": "string", "description": "Title of the workshop" },
+        "registeredAt": { "type": "string", "description": "Timestamp of registration" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Firestore server registration timestamp" }
+      },
+      "required": ["id", "name", "email", "workshopDate", "workshopTitle", "registeredAt"]
     }
   },
   "firestore": {
@@ -61,6 +94,18 @@
     "users/{userId}/referrals/{referralId}": {
       "schema": "Referral",
       "description": "Sub-collection tracking a partner's referred leads"
+    },
+    "users/{userId}/payments/{paymentId}": {
+      "schema": "UserPayment",
+      "description": "Sub-collection tracking course enrollments/payments"
+    },
+    "users/{userId}/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Sub-collection tracking individual user inquiries"
+    },
+    "users/{userId}/workshops/{workshopId}": {
+      "schema": "WorkshopRegistration",
+      "description": "Sub-collection tracking workshop registrations"
     }
   }
 }

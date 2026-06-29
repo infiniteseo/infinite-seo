@@ -53,33 +53,33 @@ export const SERVICES_DATA: Service[] = [
 export const COURSES_DATA: Course[] = [
   {
     id: "course-basic",
-    name: "Basic Course",
+    name: "Basic Training",
     duration: "1-2 Weeks with Internship",
     price: 4999,
     originalPrice: 12000,
-    description: "In our Basic Course, we teach in detailings. Launch your journey into digital commerce. Learn absolute essentials of brand presence, campaign setup, and initial organic marketing loops alongside a guaranteed internship.",
+    description: "In our Basic Training, we teach in detailings. Launch your journey into digital commerce. Learn absolute essentials of brand presence, campaign setup, and initial organic marketing loops alongside a guaranteed internship.",
     category: "marketing",
     iconName: "Megaphone",
     popular: false
   },
   {
     id: "course-advance",
-    name: "Advance Course",
+    name: "Advance Training",
     duration: "2 Weeks with Internship",
     price: 14999,
     originalPrice: 25000,
-    description: "In our Advance Course, we teach in detailings. Master high-yield outreach pipelines and social growth frameworks. Dive deep into targeted SEO systems, conversion-driven campaigns, and an interactive industry internship.",
+    description: "In our Advance Training, we teach in detailings. Master high-yield outreach pipelines and social growth frameworks. Dive deep into targeted SEO systems, conversion-driven campaigns, and an interactive industry internship.",
     category: "branding",
     iconName: "Briefcase",
     popular: true
   },
   {
     id: "course-mastery",
-    name: "Mastery Course",
-    duration: "1 Month Course with Internship",
+    name: "Mastery Training",
+    duration: "1 Month Training with Internship",
     price: 29999,
     originalPrice: 50000,
-    description: "In our Mastery Course, we teach in detailings. Our elite tier standard. 1-on-1 personalized advisory, advanced funnel builds, complete high-income automation architectures, and immersive agency workspace integration with active placement pathways.",
+    description: "In our Mastery Training, we teach in detailings. Our elite tier standard. 1-on-1 personalized advisory, advanced funnel builds, complete high-income automation architectures, and immersive agency workspace integration with active placement pathways.",
     category: "ai",
     iconName: "Cpu",
     popular: false
@@ -147,7 +147,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Neha Patel",
     avatarSeed: "neha",
     role: "Placed Campaign Specialist (Ahmedabad)",
-    quote: "I had completed theoretical courses elsewhere but my life was still stuck and unfulfilled. Joining this company was the best decision. Based on my practical skills, I got my internship certificate and secured a great placement. I am doing fantastic, achieving continuous milestones, and earning great money!",
+    quote: "I had completed theoretical trainings elsewhere but my life was still stuck and unfulfilled. Joining this company was the best decision. Based on my practical skills, I got my internship certificate and secured a great placement. I am doing fantastic, achieving continuous milestones, and earning great money!",
     rating: 5
   },
   {
@@ -235,7 +235,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Imran Ahmed",
     avatarSeed: "imran",
     role: "Placed Digital operations Lead (Bengaluru)",
-    quote: "My professional life before this course was very disappointing and not what I envisioned. Joining was a complete life-changer. Thanks to my skills and evaluation, I received my internship certificate and secured a great placement. I am achieving my goals, doing great, and my earnings have scaled beautifully!",
+    quote: "My professional life before this training was very disappointing and not what I envisioned. Joining was a complete life-changer. Thanks to my skills and evaluation, I received my internship certificate and secured a great placement. I am achieving my goals, doing great, and my earnings have scaled beautifully!",
     rating: 5
   }
 ];
@@ -243,7 +243,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
 export const WHY_CHOOSE_US_DATA: { id: string; title: string, description: string }[] = [
   { id: "why-1", title: "Practical Learning", description: "No theoretical filler lectures. We build real campaigns, write real copy, optimize real sites, and run real ads alongside you." },
   { id: "why-2", title: "Industry Experts", description: "Our elite trainers have years of hands-on digital agency experience managing seven-figure marketing spend and global organic brands." },
-  { id: "why-3", title: "Affordable Courses", description: "Premium, agency-grade strategies packaged into budget-friendly curriculums. High-utility intelligence accessible for everyone." },
+  { id: "why-3", title: "Affordable Trainings", description: "Premium, agency-grade strategies packaged into budget-friendly curriculums. High-utility intelligence accessible for everyone." },
   { id: "why-4", title: "Live Mentorship", description: "Interactive live review sessions, doubt clearance, and screenshare mentorship so you never feel lost or stuck along your journey." },
   { id: "why-5", title: "Real Case Studies", description: "Deconstruct exactly how top international brands scaled their SEO, social influence, and organic sales conversion loops." },
   { id: "why-6", title: "Community Support", description: "Lifetime placement resources, masterminds, peer study channels, and instant feedback loops within our active student community." },
@@ -259,7 +259,7 @@ export const PRICING_DATA: PricingPlan[] = [
     popular: false,
     tier: "starter",
     description: "Begin learning basic high-income digital skills at a minimal recurring entry cost.",
-    features: ["Access to all Basic Digital Skill courses", "Member-only general community forums", "Weekly practical review Webinars", "Self-paced progress tracker", "Standard digital certificate of study"]
+    features: ["Access to all Basic Digital Skill trainings", "Member-only general community forums", "Weekly practical review Webinars", "Self-paced progress tracker", "Standard digital certificate of study"]
   },
   {
     id: "pricing-pro",
@@ -297,7 +297,7 @@ export const FAQ_DATA: faqItem[] = [
   {
     id: "faq-3",
     question: "Will I receive a verified certificate upon completion?",
-    answer: "Yes! Every single student gets a course-specific digital certificate showcasing their credentials. You can easily embed this validated credential directly onto your LinkedIn profile, portfolio website, or Upwork profile to reassure clients."
+    answer: "Yes! Every single student gets a training-specific digital certificate showcasing their credentials. You can easily embed this validated credential directly onto your LinkedIn profile, portfolio website, or Upwork profile to reassure clients."
   },
   {
     id: "faq-4",
@@ -307,7 +307,7 @@ export const FAQ_DATA: faqItem[] = [
 ];
 
 export const SEO_KEYWORDS = [
-  "Digital Marketing Course",
+  "Digital Marketing Training",
   "Freelancing Training",
   "Online Business Coaching",
   "Personal Branding",
@@ -352,7 +352,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Leverage modern image generation to bypass stock photos",
       "Save 15+ hours weekly by automating content scripting with AI"
     ],
-    seoKeywords: ["AI for Business", "Entrepreneur Training", "Digital Marketing Course"]
+    seoKeywords: ["AI for Business", "Entrepreneur Training", "Digital Marketing Training"]
   },
   {
     id: "blog-3",
@@ -370,7 +370,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Prompt discussions in the comments section to boost algorithmic weight",
       "Maintain strict visual consistency in your feed templates"
     ],
-    seoKeywords: ["Personal Branding", "Social Media Marketing", "Digital Marketing Course"]
+    seoKeywords: ["Personal Branding", "Social Media Marketing", "Digital Marketing Training"]
   },
   {
     id: "blog-4",
@@ -388,7 +388,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Embrace authentic sharing of failures and solutions",
       "Commit to persistent posting for at least 6 months"
     ],
-    seoKeywords: ["Personal Branding", "Digital Marketing Course", "Online Business Coaching"]
+    seoKeywords: ["Personal Branding", "Digital Marketing Training", "Online Business Coaching"]
   },
   {
     id: "blog-5",
@@ -406,7 +406,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Prioritize visual ad creativity over minor dashboard settings",
       "Direct user pathways into private newsletter ownership"
     ],
-    seoKeywords: ["Digital Marketing Course", "Social Media Marketing", "Website Development"]
+    seoKeywords: ["Digital Marketing Training", "Social Media Marketing", "Website Development"]
   },
   {
     id: "blog-6",
@@ -442,7 +442,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Master high-conversion user-design principles",
       "Always pair your technical expertise with active Sales skills"
     ],
-    seoKeywords: ["Entrepreneur Training", "Digital Marketing Course", "Freelancing Training"]
+    seoKeywords: ["Entrepreneur Training", "Digital Marketing Training", "Freelancing Training"]
   },
   {
     id: "blog-8",
@@ -470,7 +470,7 @@ export const SUCCESS_STORIES_DATA: SuccessStory[] = [
     name: "Aarav Singhania",
     tag: "College Dropout",
     background: "Disillusioned engineering dropout from Bhopal with no prior connection to digital marketing or business ecosystems.",
-    courseTaken: "Mastery Course (1 Month Course with Internship)",
+    courseTaken: "Mastery Training (1 Month Training with Internship)",
     skillsLearned: [
       "In-depth Technical SEO Auditing",
       "Client Pitching & High-Value Proposal Structuring",
@@ -490,7 +490,7 @@ export const SUCCESS_STORIES_DATA: SuccessStory[] = [
     name: "Kavita Krishnan",
     tag: "Homemaker & Mother",
     background: "Full-time homemaker and mother of two in Coimbatore looking to build a remote business from her laptop with completely zero experience.",
-    courseTaken: "Advance Course (2 Weeks with Internship)",
+    courseTaken: "Advance Training (2 Weeks with Internship)",
     skillsLearned: [
       "Social Media Management & Strategy (SMM)",
       "Pinterest Aesthetic Organic Growth Funnels",
@@ -510,7 +510,7 @@ export const SUCCESS_STORIES_DATA: SuccessStory[] = [
     name: "Manish Bansal",
     tag: "Career Changer",
     background: "Former retail branch manager in Ludhiana who was laid off and wanted a high-opportunity digital path.",
-    courseTaken: "Mastery Course (1 Month Course with Internship)",
+    courseTaken: "Mastery Training (1 Month Training with Internship)",
     skillsLearned: [
       "High-Conversion SEO Content Strategy",
       "Automated WhatsApp & Email Lead Funnels",
@@ -522,7 +522,7 @@ export const SUCCESS_STORIES_DATA: SuccessStory[] = [
       "Expanded his scope and hired two assistant writers to automate content delivery."
     ],
     highlightMetric: "₹90K/mo Agency Growth",
-    testimonialQuote: "Getting laid off in my mid-30s was terrifying. I knew nothing about search engine rankings. During the Mastery Course internship, I audited real industrial websites. I pitched exactly what I learned to local manufacturing founders. The value is immediate—I signed three ₹30K/month retainers and have started hiring my own team!",
+    testimonialQuote: "Getting laid off in my mid-30s was terrifying. I knew nothing about search engine rankings. During the Mastery Training internship, I audited real industrial websites. I pitched exactly what I learned to local manufacturing founders. The value is immediate—I signed three ₹30K/month retainers and have started hiring my own team!",
     imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&h=600&q=80"
   },
   {
@@ -530,7 +530,7 @@ export const SUCCESS_STORIES_DATA: SuccessStory[] = [
     name: "Nisha Deshpande",
     tag: "Graphic Designer",
     background: "Struggling freelance graphic designer in Pune facing price-undercutting on traditional gig sites.",
-    courseTaken: "Basic Course (1-2 Weeks with Internship)",
+    courseTaken: "Basic Training (1-2 Weeks with Internship)",
     skillsLearned: [
       "LinkedIn Authority Profiling & Outbound Pitching",
       "Conversion Rate Optimization (CRO) for Landing Pages",

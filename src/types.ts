@@ -84,6 +84,7 @@ export interface User {
   uid: string;
   name?: string;
   email?: string;
+  phone?: string;
   partnerLevel?: string;
   promoCode?: string;
   createdAt?: string | any;
@@ -109,4 +110,40 @@ export interface Referral {
   referrerUid?: string;
   createdAt?: string;
 }
+
+export interface PaymentConfig {
+  ownerUpiId: string;
+  ownerName: string;
+  basicCourseUrl?: string;
+  advanceCourseUrl?: string;
+  masteryCourseUrl?: string;
+  starterPlanUrl?: string;
+  proPlanUrl?: string;
+  premiumPlanUrl?: string;
+  qrCodeEnabled: boolean;
+}
+
+export interface UserPayment {
+  id: string;
+  courseOrPlanName: string;
+  amount: number;
+  paymentMethod: "upi" | "card";
+  transactionId: string;
+  status: "Completed" | "Pending" | "Verification Pending";
+  date: string;
+  createdAt?: string | any;
+}
+
+export interface WorkshopRegistration {
+  id: string;
+  userId?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  workshopDate: string;
+  workshopTitle: string;
+  registeredAt: string;
+}
+
+
 
