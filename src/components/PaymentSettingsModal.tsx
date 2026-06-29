@@ -242,14 +242,14 @@ export default function PaymentSettingsModal() {
   return (
     <>
       {/* Floating Settings Trigger Button */}
-      <button
+      {/* <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-widest px-4 py-3.5 rounded-full shadow-2xl transition-all duration-300 flex items-center gap-2 hover:scale-105 border border-amber-300/30 cursor-pointer"
         title="Configure Payment Gateway Links"
       >
         <Settings className="h-4 w-4 animate-spin-slow text-slate-950" />
         <span>Configure Payment Links</span>
-      </button>
+      </button> */}
 
       {/* Modal Overlay */}
       {isOpen && (
