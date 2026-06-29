@@ -306,12 +306,18 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
   const currentPayablePrice = currentOriginalPrice;
 
   const getCommissionForCourse = (courseName: string, level: "novice" | "pro" | "master"): number => {
-    let base = 3000; // Advance Course default (₹3,000 instead of ₹2250)
     if (courseName.includes("Basic")) {
-      base = 1500;   // ₹1,500 instead of ₹750
-    } else if (courseName.includes("Mastery")) {
-      base = 5000;   // ₹5,000 instead of ₹4500
-    } else if (courseName.includes("Starter")) {
+      return 1500;
+    }
+    if (courseName.includes("Mastery")) {
+      return 5000;
+    }
+    if (courseName.includes("Advance")) {
+      return 3500;
+    }
+
+    let base = 3500; // default fallback
+    if (courseName.includes("Starter")) {
       base = 300;
     } else if (courseName.includes("Pro")) {
       base = 900;
@@ -817,29 +823,12 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                         onChange={(e) => setRegCourse(e.target.value)}
                         className="w-full bg-slate-950 border border-slate-850 p-2.5 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 font-medium font-sans"
                       >
-                        <optgroup label="Training Programs & Internships" className="bg-slate-900 text-amber-400 font-bold">
-                          <option value="Basic Training" className="text-white">Basic Training (₹4,999)</option>
-                          <option value="Advance Training" className="text-white">Advance Training (₹14,999)</option>
-                          <option value="Mastery Training" className="text-white">Mastery Training (₹29,999)</option>
-                          <option value="Starter Plan" className="text-white">Starter Plan (₹999)</option>
-                          <option value="Pro Plan" className="text-white">Pro Plan (₹2,999)</option>
-                          <option value="Premium Plan" className="text-white">Premium Plan (₹5,999)</option>
-                        </optgroup>
-                        <optgroup label="Our Agency Services" className="bg-slate-900 text-blue-400 font-bold">
-                          <option value="Digital Marketing" className="text-white">Digital Marketing Service (₹9,999)</option>
-                          <option value="Social Media Marketing" className="text-white">Social Media Marketing Service (₹7,999)</option>
-                          <option value="Influencer Marketing" className="text-white">Influencer Marketing Service (₹12,499)</option>
-                          <option value="Affiliate Marketing" className="text-white">Affiliate Marketing Service (₹6,999)</option>
-                          <option value="Performance Marketing" className="text-white">Performance Marketing Service (₹14,999)</option>
-                          <option value="AI Services" className="text-white">AI Services (₹11,999)</option>
-                          <option value="Editing (Photos, Videos, Thumbnails)" className="text-white">Editing (Photos, Videos, Thumbnails) (₹3,999)</option>
-                          <option value="Followers & Growth Campaigns" className="text-white">Followers & Growth Campaigns (₹2,499)</option>
-                          <option value="Logo Designing" className="text-white">Logo Designing Service (₹1,999)</option>
-                          <option value="Poster & Banner Designing" className="text-white">Poster & Banner Designing (₹1,499)</option>
-                          <option value="Animations" className="text-white">Animations Service (₹8,999)</option>
-                          <option value="ADS Campaign" className="text-white">ADS Campaign Service (₹9,999)</option>
-                          <option value="Custom Solutions & Many More..." className="text-white">Custom Solutions & Many More...</option>
-                        </optgroup>
+                        <option value="Starter Plan" className="text-white">Starter Plan (₹999)</option>
+                        <option value="Pro Plan" className="text-white">Pro Plan (₹2,999)</option>
+                        <option value="Premium Plan" className="text-white">Premium Plan (₹5,999)</option>
+                        <option value="Basic Training" className="text-white">Basic Training (₹4,999)</option>
+                        <option value="Advance Training" className="text-white">Advance Training (₹14,999)</option>
+                        <option value="Mastery Training" className="text-white">Mastery Training (₹29,999)</option>
                       </select>
                     </div>
 
@@ -1456,7 +1445,7 @@ export default function EarningDashboard({ selectedEnrollCourse, setSelectedEnro
                         ₹{calculatedOutput.toLocaleString("en-IN")}
                       </div>
                       <span className="text-[9px] text-slate-500 block mt-1 leading-normal font-light">
-                        At your current {(getCommissionRate() * 100)}% partnership allocation scale
+                        Guaranteed flat payout commission rate per enrollment signup
                       </span>
                     </div>
                   </div>

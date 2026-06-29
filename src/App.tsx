@@ -102,7 +102,7 @@ export default function App() {
   };
 
   const handleJoinCommunity = () => {
-    scrollToSection("pricing");
+    scrollToSection("contact");
   };
 
   const handleServiceSelect = (serviceName: string) => {
@@ -174,7 +174,7 @@ export default function App() {
       {/* Detailed Student Case Studies & Alumnus Submission hub */}
       <SuccessStories />
 
-      {/* Multi-tier member rate toggle panels */}
+      {/* Interactive Agency Services Packages & Pricing */}
       <Pricing onPlanInquiry={handlePlanInquiry} />
 
       {/* Interactive Partner Referral & Commission Earning Dashboard */}

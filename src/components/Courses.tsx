@@ -319,7 +319,7 @@ export default function Courses({ onEnrollClick }: CoursesProps) {
                       )}
                     </div>
                     {course.originalPrice && (
-                      <span className="inline-block text-[9px] text-emerald-600 font-bold bg-emerald-50 border border-emerald-200/50 px-1.5 py-0.5 rounded-md mt-1 mb-0.5">
+                      <span className="inline-block text-[9px] text-emerald-600 font-bold bg-[#E6F4EA] border border-emerald-200/50 px-1.5 py-0.5 rounded-md mt-1 mb-0.5">
                         Save ₹{(course.originalPrice - course.price).toLocaleString("en-IN")} ({Math.round(((course.originalPrice - course.price) * 100) / course.originalPrice)}% OFF)
                       </span>
                     )}

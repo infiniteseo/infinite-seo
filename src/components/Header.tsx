@@ -53,7 +53,7 @@ export default function Header({
     { name: "Trainings", href: "#courses", id: "courses-link" },
     { name: "Why Us", href: "#why-us", id: "why-us-link" },
     { name: "Success Stories", href: "#success-stories", id: "success-stories-link" },
-    { name: "Pricing", href: "#pricing", id: "pricing-link" },
+    { name: "Agency Pricing", href: "#pricing", id: "pricing-link" },
     { name: "Earnings 💰", href: "#earning-dashboard", id: "earning-link" },
     { name: "Learning Hub", href: "#blog", id: "blog-link" },
     { name: "FAQ", href: "#faq", id: "faq-link" },
